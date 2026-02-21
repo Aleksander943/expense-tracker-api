@@ -7,7 +7,7 @@ const userController = {
     const { name, email, password } = req.body;
 
     try {
-      const hashedPassword = await bcrypt.hash(password, 8);
+      const hashedPassword = await bcrypt.hash(password, 4);
       const user = await prisma.user.create({
         data: { name, email, password: hashedPassword },
       });
