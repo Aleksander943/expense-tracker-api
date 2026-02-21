@@ -8,6 +8,6 @@ app.get("/teste-direto", (req, res) => {
   res.send("O servidor está vivo!");
 });
 
-app.listen(porta, () => {
-  console.log(`Servidor online em: http://localhost:${porta}`);
+app.listen(porta, "0.0.0.0", () => {
+  console.log(`Servidor online na porta: ${porta}`);
 });
