@@ -3,6 +3,7 @@ import userRoutes from "./user.routes.js";
 import { auth } from "../middlewares/auth.js";
 import transactionController from "../controllers/transaction.controller.js"
 import dashboard from "../controllers/dashboard.controller.js";
+import { User } from "../controllers/User_Controller.js";
 
 const router = Router();
 
@@ -38,12 +39,7 @@ router.get("/debug/db-target", (req, res) => {
   res.json(getDbDiagnostics());
 });
 
-router.get("/me", auth, (req, res) => {
-  res.json({
-    mensagem: "Rota protegida, usuário autenticado!",
-    seuId: req.userId
-  });
-})
+router.get("/me", auth, User);
 
 router.post("/transaction", auth, transactionController.transaction);
 
