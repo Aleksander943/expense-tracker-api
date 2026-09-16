@@ -20,12 +20,13 @@ model User {
   transaction   transaction[]
 }
 
-model transaction{
-  id            Int @id @default(autoincrement())
-  description   String
-  value         Float
-  type          String 
-  createdAt     DateTime @default(now())
-  userId        Int
-  user          User   @relation(fields: [userId], references: [id])
+model transaction {
+  id              Int      @id @default(autoincrement())
+  description     String
+  value           Float
+  type            String
+  transactionDate DateTime // data escolhida pelo usuário
+  createdAt       DateTime @default(now()) // data/hora de cadastro
+  userId          Int
+  user            User     @relation(fields: [userId], references: [id])
 }
