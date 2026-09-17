@@ -1,9 +1,12 @@
 import { Router } from "express";
 import userRoutes from "./user.routes.js";
 import { auth } from "../middlewares/auth.js";
-import transactionController from "../controllers/transaction.controller.js"
+import {
+  createTransactionController,
+  listTransactionsController,
+} from "../controllers/transaction.controller.js";
 import dashboard from "../controllers/dashboard.controller.js";
-import { User } from "../controllers/User_Controller.js";
+import { User } from "../controllers/auth.controller.js";
 
 const router = Router();
 
@@ -41,15 +44,15 @@ router.get("/debug/db-target", (req, res) => {
 
 router.get("/me", auth, User);
 
-router.post("/transaction", auth, transactionController.transaction);
+router.post("/transaction", auth, createTransactionController);
 
-router.get("/transactions", auth, transactionController.index);
+router.get("/transactions", auth, listTransactionsController);
 
-router.delete("/transaction/:id", auth, transactionController.delete)
+// router.delete("/transaction/:id", auth, transactionController.delete);
 
-router.put("/transaction/:id", auth, transactionController.put)
+// router.put("/transaction/:id", auth, transactionController.put);
 
-router.get("/dashboard", auth, dashboard.dashboard)
+router.get("/dashboard", auth, dashboard.dashboard);
 
 router.use(userRoutes);
 

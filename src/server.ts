@@ -1,8 +1,8 @@
 
 import "dotenv/config";
-import app from "./app.js"; // O arquivo app.js está na mesma pasta?
+import app from "./app.js";
 
-const porta = process.env.PORT || 8080;
+const porta = Number(process.env.PORT || 8080);
 
 app.get("/teste-direto", (req, res) => {
   res.send("O servidor está vivo!");
