@@ -71,7 +71,9 @@ export const updateTransactionController = async (
       return res.status(404).json({ error: "Transação não identificada" });
     }
 
-    return res.status(200).json({ mensagem: "Transação atualizada com sucesso." });
+    return res
+      .status(200)
+      .json({ mensagem: "Transação atualizada com sucesso." });
   } catch (error) {
     return res.status(500).json({ error: "Erro ao atualizar a transação." });
   }

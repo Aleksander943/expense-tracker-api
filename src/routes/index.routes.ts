@@ -3,9 +3,10 @@ import userRoutes from "./user.routes.js";
 import { auth } from "../middlewares/auth.js";
 import {
   createTransactionController,
+  deleteTransactionController,
   listTransactionsController,
+  updateTransactionController,
 } from "../controllers/transaction.controller.js";
-import dashboard from "../controllers/dashboard.controller.js";
 import { User } from "../controllers/auth.controller.js";
 
 const router = Router();
@@ -47,12 +48,10 @@ router.get("/me", auth, User);
 router.post("/transaction", auth, createTransactionController);
 
 router.get("/transactions", auth, listTransactionsController);
+ 
+router.delete("/transaction/:id", auth, deleteTransactionController);
 
-// router.delete("/transaction/:id", auth, transactionController.delete);
-
-// router.put("/transaction/:id", auth, transactionController.put);
-
-router.get("/dashboard", auth, dashboard.dashboard);
+ router.put("/transaction/:id", auth, updateTransactionController);
 
 router.use(userRoutes);
 
