@@ -1,16 +1,13 @@
-import { GetUser } from "../services/user.service.js";
 import type { Request, Response } from "express";
+import { GetUser } from "../services/user.service.js";
 
 export const User = async (req: Request, res: Response) => {
+  const userId = req.userId;
+
   try {
-    const user = await GetUser(req.userId);
-
-    return res.status(200).json(user);
+    const userGet = await GetUser( userId ) 
+    return res.status(200).json(userGet);
   } catch (error) {
-    console.error("Erro ao buscar usuário:", error);
-
-    return res.status(500).json({
-      mensagem: "Erro ao buscar usuário",
-    });
+   return res.status(500).json({ error: "Erro ao buscar usuario." });
   }
 };
