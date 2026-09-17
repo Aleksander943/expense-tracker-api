@@ -1,7 +1,8 @@
 import prisma from "../lib/prisma.js";
+import type { Request, Response } from "express";
 
 const dashboard = {
-  async dashboard(req, res) {
+  async dashboard(req: Request, res: Response) {
     try {
       const userId = Number(req.userId);
       const transactions = await prisma.transaction.findMany({

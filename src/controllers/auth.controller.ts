@@ -1,6 +1,7 @@
-import { GetUser } from "../services/User.js";
+import { GetUser } from "../services/user.service.js";
+import type { Request, Response } from "express";
 
-export const User = async (req, res) => {
+export const User = async (req: Request, res: Response) => {
   try {
     const user = await GetUser(req.userId);
 
