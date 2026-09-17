@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { GetUser } from "../services/user.service.js";
+import { GetUser } from "../services/auth.service.js";
 
 export const User = async (req: Request, res: Response) => {
   const userId = req.userId;
