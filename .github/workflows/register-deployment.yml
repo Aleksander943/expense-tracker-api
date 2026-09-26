@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://expense-tracker-api.onrender.com
+      url: https://expense-tracker-api-bskm.onrender.com
 
     steps:
       - name: Verify Render deployment
@@ -26,4 +26,4 @@ jobs:
             --retry-delay 15 \
             --retry-all-errors \
             --max-time 30 \
-            https://expense-tracker-api.onrender.com/
+            https://expense-tracker-api-bskm.onrender.com/
