@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { createUser, loginUser } from "../services/user.service.js";
+import { CreateUser, loginUser } from "../services/user.service.js";
 
 export const createUserController = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -10,7 +10,7 @@ export const createUserController = async (req: Request, res: Response) => {
       .json({ message: "Todos os campos são necessários para criação." });
   }
   try {
-    const createUse = await createUser({
+    const createUse = await CreateUser({
       name,
       email,
       password,
@@ -32,7 +32,7 @@ export const createUserController = async (req: Request, res: Response) => {
   }
 };
 
-export const userLoginController = async (req: Request, res: Response) => {
+export const loginUserController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email?.trim() || !password) {
@@ -42,11 +42,11 @@ export const userLoginController = async (req: Request, res: Response) => {
   }
 
   try {
-    const userLogin = await loginUser({
+    const loginResult= await loginUser({
       email,
       password,
     });
-    return res.status(200).json(userLogin);
+    return res.status(200).json(loginResult);
   } catch (error) {
     if (
       error instanceof Error &&
