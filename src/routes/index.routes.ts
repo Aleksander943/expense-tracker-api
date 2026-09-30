@@ -7,7 +7,7 @@ import {
   listTransactionsController,
   updateTransactionController,
 } from "../controllers/transaction.controller.js";
-import { User } from "../controllers/auth.controller.js";
+import { getUserController } from "../controllers/auth.controller.js";
 
 const router = Router();
 
@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
   res.json({ mensagem: "Servidor rodando" });
 });
 
-router.get("/me", auth, User);
+router.get("/me", auth, getUserController);
 
 router.post("/transaction", auth, createTransactionController);
 
