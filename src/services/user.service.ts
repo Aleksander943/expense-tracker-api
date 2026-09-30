@@ -14,12 +14,23 @@ interface LoginUser {
 }
 
 export const createUser = async ({ name, email, password }: CreateUser) => {
+  
+  const verificacao = await prisma.user.findUnique({
+    where:{ 
+      email: email.toLowerCase().trim()
+    }
+  })
+  
+  if(verificacao !== null){
+    throw new Error("Este e-mail já está cadastrado")
+  }
+  
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  return prisma.user.create({
+  const create = prisma.user.create({
     data: {
-      name,
-      email,
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
       password: hashedPassword,
     },
     select: {
@@ -28,21 +39,23 @@ export const createUser = async ({ name, email, password }: CreateUser) => {
       email: true,
     },
   });
+  
+  return create
 };
 
 export const loginUser = async ({ email, password }: LoginUser) => {
   const user = await prisma.user.findUnique({
     where: {
-      email,
+      email: email.toLowerCase().trim(),
     },
   });
 
   if (!user) {
-    throw new Error("Usuário não existe!");
+    throw new Error("E-mail ou senha inválidos");
   }
 
   const passwordMatch = await bcrypt.compare(password, user.password);
-
+  
   if (!passwordMatch) {
     throw new Error("E-mail ou senha inválidos");
   }
