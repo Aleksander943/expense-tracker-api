@@ -17,7 +17,18 @@ export const createUserController = async (req: Request, res: Response) => {
     });
     return res.status(201).json(createUse);
   } catch (error) {
-    return res.status(500).json({ error: "Erro na criação de usuário." });
+    if (
+      error instanceof Error &&
+      error.message === "Este e-mail já está cadastrado"
+    ) {
+      return res.status(409).json({
+        error: "Este e-mail já está cadastrado",
+      });
+    }
+
+    return res.status(500).json({
+      error: "Erro na criação de usuário.",
+    });
   }
 };
 
@@ -39,8 +50,7 @@ export const userLoginController = async (req: Request, res: Response) => {
   } catch (error) {
     if (
       error instanceof Error &&
-      (error.message === "Usuário não existe!" ||
-        error.message === "E-mail ou senha inválidos")
+      error.message === "E-mail ou senha inválidos"
     ) {
       return res.status(401).json({
         error: "E-mail ou senha inválidos.",
