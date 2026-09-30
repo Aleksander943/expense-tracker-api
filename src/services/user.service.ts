@@ -2,32 +2,32 @@ import bcrypt from "bcryptjs";
 import prisma from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
 
-interface CreateUser {
+interface CreateUserInput {
   name: string;
   email: string;
   password: string;
 }
 
-interface LoginUser {
+interface LoginUserInput {
   email: string;
   password: string;
 }
 
-export const createUser = async ({ name, email, password }: CreateUser) => {
+export const CreateUser = async ({ name, email, password }: CreateUserInput) => {
   
-  const verificacao = await prisma.user.findUnique({
+  const existingUser= await prisma.user.findUnique({
     where:{ 
       email: email.toLowerCase().trim()
     }
   })
   
-  if(verificacao !== null){
+  if(existingUser !== null){
     throw new Error("Este e-mail já está cadastrado")
   }
   
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const create = prisma.user.create({
+  const createUser = prisma.user.create({
     data: {
       name: name.trim(),
       email: email.toLowerCase().trim(),
@@ -40,10 +40,10 @@ export const createUser = async ({ name, email, password }: CreateUser) => {
     },
   });
   
-  return create
+  return createUser
 };
 
-export const loginUser = async ({ email, password }: LoginUser) => {
+export const loginUser = async ({ email, password }: LoginUserInput) => {
   const user = await prisma.user.findUnique({
     where: {
       email: email.toLowerCase().trim(),
