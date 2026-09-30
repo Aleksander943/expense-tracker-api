@@ -1,16 +1,16 @@
 import type { Request, Response } from "express";
-import { GetUser } from "../services/auth.service.js";
+import { getUser } from "../services/auth.service.js";
 
-export const User = async (req: Request, res: Response) => {
+export const getUserController = async (req: Request, res: Response) => {
   const userId = req.userId;
 
   try {
-    const userGet = await GetUser(userId);
+    const user = await getUser(userId);
 
-    if (userGet == null) {
+    if (user == null) {
       return res.status(404).json({ error: "Usuário não encontrado" });
     }
-    return res.status(200).json(userGet);
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).json({ error: "Erro ao buscar usuario." });
   }
